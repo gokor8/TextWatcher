@@ -11,9 +11,9 @@ class MaskStoreTest {
     fun get_emptyUnits_string_and_offset() {
         val maskStore = MaskStore.Default(arrayOf(MaskUnit.Empty(), MaskUnit.Empty()))
 
+        assertEquals("12", maskStore.getMaskedString("12"))
         assertEquals("", maskStore.getMaskedString(""))
         assertEquals("1", maskStore.getMaskedString("1"))
-        assertEquals("12", maskStore.getMaskedString("12"))
         assertEquals("123", maskStore.getMaskedString("123"))
 
         assertEquals(0, maskStore.offsetOfStatics(0))
@@ -110,9 +110,9 @@ class MaskStoreTest {
         assertEquals("+7", maskStore.getMaskedString(""))
         assertEquals("+71", maskStore.getMaskedString("1"))
         assertEquals("+712", maskStore.getMaskedString("12"))
-        assertEquals("+7123", maskStore.getMaskedString("123"))
-        assertEquals("+7123-456", maskStore.getMaskedString("123456"))
-        assertEquals("+7123-456-78", maskStore.getMaskedString("12345678"))
+        assertEquals("+7123-", maskStore.getMaskedString("123"))
+        assertEquals("+7123-456-", maskStore.getMaskedString("123456"))
+        assertEquals("+7123-456-78-", maskStore.getMaskedString("12345678"))
         assertEquals("+7123-456-78-90", maskStore.getMaskedString("1234567890"))
 
         assertEquals(1, maskStore.offsetOfStatics(0))

@@ -1,7 +1,8 @@
 package ru.gok.textwatcher.store
 
 import ru.gok.textwatcher.MaskUnit
-import ru.gok.textwatcher.store.indexer.Indexer
+import ru.gok.textwatcher.store.index_handler.IndexHandler
+import ru.gok.textwatcher.store.index_handler.IndexWrapper
 
 abstract class MaskStore(
     private val maskUnits: Array<MaskUnit>
@@ -13,11 +14,14 @@ abstract class MaskStore(
 
     fun getMaskedString(text: String): String {
         val masked = StringBuilder()
-        var indexer = Indexer()
+        var helper = IndexHandler(
+            IndexWrapper.Mask(maskUnits),
+            IndexWrapper.Text(text)
+        )
 
-        while (text.length != indexer.textIndex) {
-            masked.append(indexer.getSymbol(maskUnits, text))
-            indexer = indexer.copyNextIndex(maskUnits)
+        while (helper.canWhile()) {
+            masked.append(helper.getWrapper().getSymbol())
+            helper = helper.incCopy()
         }
 
         return masked.toString()
