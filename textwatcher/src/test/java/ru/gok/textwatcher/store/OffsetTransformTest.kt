@@ -3,37 +3,37 @@ package ru.gok.textwatcher.store
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import ru.gok.textwatcher.MaskUnit
+import ru.gok.textwatcher.store.count_state.CountUnitMapper
 
-class MaskStoreTest {
+class OffsetTransformTest {
+
+    private val transformMapper = CountUnitMapper.ToTransform()
 
     @Test
     fun get_emptyUnits_string_and_offset() {
         val maskStore = MaskStore.Default(arrayOf(MaskUnit.Empty(), MaskUnit.Empty()))
 
-        assertEquals("12", maskStore.getMaskedString("12"))
-        assertEquals("", maskStore.getMaskedString(""))
-        assertEquals("1", maskStore.getMaskedString("1"))
-        assertEquals("123", maskStore.getMaskedString("123"))
+        assertEquals(0, maskStore.offsetOfStatics(0, transformMapper))
+        assertEquals(0, maskStore.offsetOfStatics(1, transformMapper))
+        assertEquals(0, maskStore.offsetOfStatics(2, transformMapper))
     }
 
     @Test
     fun `get replaceUnits string and offset`() {
         val maskStore = MaskStore.Default(arrayOf(MaskUnit.Replace('7'), MaskUnit.Empty()))
 
-        assertEquals("7", maskStore.getMaskedString(""))
-        assertEquals("1", maskStore.getMaskedString("1"))
-        assertEquals("12", maskStore.getMaskedString("12"))
-        assertEquals("123", maskStore.getMaskedString("123"))
+        assertEquals(1, maskStore.offsetOfStatics(0, transformMapper))
+        assertEquals(0, maskStore.offsetOfStatics(1, transformMapper))
+        assertEquals(0, maskStore.offsetOfStatics(2, transformMapper))
     }
 
     @Test
     fun `get staticUnits string and offset`() {
         val maskStore = MaskStore.Default(arrayOf(MaskUnit.Static('7'), MaskUnit.Empty()))
 
-        assertEquals("7", maskStore.getMaskedString(""))
-        assertEquals("71", maskStore.getMaskedString("1"))
-        assertEquals("712", maskStore.getMaskedString("12"))
-        assertEquals("7123", maskStore.getMaskedString("123"))
+        assertEquals(1, maskStore.offsetOfStatics(0, transformMapper))
+        assertEquals(1, maskStore.offsetOfStatics(1, transformMapper))
+        assertEquals(1, maskStore.offsetOfStatics(2, transformMapper))
     }
 
     @Test
@@ -42,10 +42,9 @@ class MaskStoreTest {
             arrayOf(MaskUnit.Static('7'), MaskUnit.Static(' '), MaskUnit.Empty())
         )
 
-        assertEquals("7 ", maskStore.getMaskedString(""))
-        assertEquals("7 1", maskStore.getMaskedString("1"))
-        assertEquals("7 12", maskStore.getMaskedString("12"))
-        assertEquals("7 123", maskStore.getMaskedString("123"))
+        assertEquals(2, maskStore.offsetOfStatics(0, transformMapper))
+        assertEquals(2, maskStore.offsetOfStatics(1, transformMapper))
+        assertEquals(2, maskStore.offsetOfStatics(2, transformMapper))
     }
 
     @Test
@@ -58,10 +57,9 @@ class MaskStoreTest {
             )
         )
 
-        assertEquals("7-", maskStore.getMaskedString(""))
-        assertEquals("71", maskStore.getMaskedString("1"))
-        assertEquals("712", maskStore.getMaskedString("12"))
-        assertEquals("7123", maskStore.getMaskedString("123"))
+        assertEquals(1, maskStore.offsetOfStatics(1, transformMapper))
+        assertEquals(2, maskStore.offsetOfStatics(0, transformMapper))
+        assertEquals(1, maskStore.offsetOfStatics(2, transformMapper))
     }
 
     @Test
@@ -75,10 +73,11 @@ class MaskStoreTest {
             )
         )
 
-        assertEquals("7-7-", maskStore.getMaskedString(""))
-        assertEquals("717-", maskStore.getMaskedString("1"))
-        assertEquals("7172", maskStore.getMaskedString("12"))
-        assertEquals("71723", maskStore.getMaskedString("123"))
+        assertEquals(4, maskStore.offsetOfStatics(0, transformMapper))
+        assertEquals(3, maskStore.offsetOfStatics(1, transformMapper))
+        assertEquals(2, maskStore.offsetOfStatics(2, transformMapper))
+        assertEquals(2, maskStore.offsetOfStatics(3, transformMapper))
+        assertEquals(2, maskStore.offsetOfStatics(4, transformMapper))
     }
 
     @Test
@@ -103,12 +102,10 @@ class MaskStoreTest {
             )
         )
 
-        assertEquals("+7", maskStore.getMaskedString(""))
-        assertEquals("+71", maskStore.getMaskedString("1"))
-        assertEquals("+712", maskStore.getMaskedString("12"))
-        assertEquals("+7123-", maskStore.getMaskedString("123"))
-        assertEquals("+7123-456-", maskStore.getMaskedString("123456"))
-        assertEquals("+7123-456-78-", maskStore.getMaskedString("12345678"))
-        assertEquals("+7123-456-78-90", maskStore.getMaskedString("1234567890"))
+        assertEquals(2, maskStore.offsetOfStatics(0, transformMapper))
+        assertEquals(2, maskStore.offsetOfStatics(1, transformMapper))
+        assertEquals(3, maskStore.offsetOfStatics(5, transformMapper))
+        assertEquals(4, maskStore.offsetOfStatics(6, transformMapper))
+        assertEquals(5, maskStore.offsetOfStatics(10, transformMapper))
     }
 }

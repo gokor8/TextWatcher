@@ -6,7 +6,7 @@ class IndexHandler(
     private val maskWrapper: IndexWrapper.Mask,
     private val textWrapper: IndexWrapper.Text
 ) {
-    fun canWhile() = maskWrapper.isUnitVisible() || !textWrapper.isLastIndex()
+    fun canContinue() = maskWrapper.isUnitVisible() || !textWrapper.isLastIndex()
 
     fun getWrapper() = maskWrapper.takeIf {
         maskWrapper.isUnitStatic() || (maskWrapper.isUnitVisible() && textWrapper.isEmpty())
@@ -45,6 +45,6 @@ abstract class IndexWrapper(protected val index: Int) {
 
         fun isLastIndex() = text.length == index
 
-        fun isEmpty() = text.isEmpty()
+        fun isEmpty() = text.getOrNull(index) == null
     }
 }
