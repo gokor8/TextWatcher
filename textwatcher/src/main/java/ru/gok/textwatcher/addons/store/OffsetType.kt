@@ -1,24 +1,24 @@
 package ru.gok.textwatcher.addons.store
 
-import ru.gok.textwatcher.addons.store.count_state.CountUnitMapper
+import ru.gok.textwatcher.chain.*
 
 enum class OffsetType {
 
     TO_TRANSFORM {
-        override fun mapper() = CountUnitMapper.ToTransform()
+        override val chainPattern = ChainPatterns.ToTransform()
 
         override fun operation(offset: Int, staticsOffset: Int) = offset + staticsOffset
     },
     TO_ORIGIN {
-        override fun mapper() = CountUnitMapper.ToOrigin()
+        override val chainPattern = ChainPatterns.ToOrigin()
 
         override fun operation(offset: Int, staticsOffset: Int) = offset - staticsOffset
     };
 
-    protected abstract fun mapper(): CountUnitMapper
+    protected abstract val chainPattern: ChainPatterns
 
     fun getFullOffset(offset: Int, store: MaskStore) = operation(
-        offset, store.offsetOfStatics(offset, mapper())
+        offset, store.offsetOfStatics(offset, chainPattern.pattern())
     )
 
     protected abstract fun operation(offset: Int, staticsOffset: Int): Int

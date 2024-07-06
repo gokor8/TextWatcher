@@ -4,11 +4,11 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import ru.gok.textwatcher.addons.store.MaskUnit
 import ru.gok.textwatcher.addons.store.MaskStore
-import ru.gok.textwatcher.addons.store.count_state.CountUnitMapper
+import ru.gok.textwatcher.chain.ChainPatterns
 
 class OffsetTransformTest {
 
-    private val transformMapper = CountUnitMapper.ToTransform()
+    private val transformMapper = ChainPatterns.ToTransform().pattern()
 
     @Test
     fun get_emptyUnits_string_and_offset() {

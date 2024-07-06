@@ -18,5 +18,6 @@ class MaskVisualTransformation(
         MaskOffsetMapping(store, limit)
     )
 
-    fun subText(text: String) = limit.filter(text)
+    fun subText(text: String, type: TransformationType) =
+        if (type == TransformationType.Transform) limit.filter(text) else text
 }

@@ -1,10 +1,10 @@
 package ru.gok.textwatcher.addons.store
 
-import ru.gok.textwatcher.addons.store.count_state.CountUnitMapper
+import ru.gok.textwatcher.chain.CountUnitChain
 
 interface Store {
 
-    fun offsetOfStatics(offset: Int, stateMapper: CountUnitMapper): Int
+    fun offsetOfStatics(offset: Int, chain: CountUnitChain): Int
 
     fun getMaskedString(text: String): String
 

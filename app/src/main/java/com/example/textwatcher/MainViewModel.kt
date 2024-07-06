@@ -10,11 +10,6 @@ class MainViewModel : ViewModel() {
 
     val maskVisualTransformation = MaskVisualTransformation(
         MaskStore.Default(
-//            arrayOf(
-//                MaskUnit.Empty(),
-//                MaskUnit.Static('-'),
-//                MaskUnit.Empty()
-//            )
             arrayOf(
                 MaskUnit.Static('+'),
                 MaskUnit.Static('7'),

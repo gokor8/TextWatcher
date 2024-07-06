@@ -1,6 +1,6 @@
 package ru.gok.textwatcher.chain
 
-interface Chain {
+interface Chain<T, R> {
 
-    fun handle()
+    fun handle(data: T): R
 }

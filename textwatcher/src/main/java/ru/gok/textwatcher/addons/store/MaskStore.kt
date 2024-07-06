@@ -1,19 +1,17 @@
 package ru.gok.textwatcher.addons.store
 
-import ru.gok.textwatcher.addons.store.count_state.CountUnitMapper
-import ru.gok.textwatcher.addons.store.count_state.CountUnitState
+import ru.gok.textwatcher.addons.store.count_state.UnitState
 import ru.gok.textwatcher.addons.store.index_handler.IndexState
 import ru.gok.textwatcher.addons.store.index_handler.IndexWrapper
+import ru.gok.textwatcher.chain.CountUnitChain
 
 abstract class MaskStore(maskUnits: Array<MaskUnit>) : Store.Base(maskUnits) {
 
-    override fun offsetOfStatics(offset: Int, stateMapper: CountUnitMapper): Int {
-        var state: CountUnitState = CountUnitState.Start()
+    override fun offsetOfStatics(offset: Int, chain: CountUnitChain): Int {
+        var state: UnitState = UnitState.Start()
 
-        var index = 0
-        while (state !is CountUnitState.Finish) {
-            state = state.copy(maskUnits.getOrNull(index), offset, stateMapper)
-            index++
+        while (state !is UnitState.Finish) {
+            state = state.copy(state.getUnit(maskUnits), offset, chain)
         }
 
         return state.count
