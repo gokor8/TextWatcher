@@ -16,7 +16,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.textwatcher.ui.theme.TextWatcherTheme
-import ru.gok.textwatcher.MaskVisualTransformation
 import ru.gok.textwatcher.MaskedTextField
 
 class MainActivity : ComponentActivity() {

@@ -1,22 +1,6 @@
-package ru.gok.textwatcher.store.index_handler
+package ru.gok.textwatcher.addons.store.index_handler
 
-import ru.gok.textwatcher.MaskUnit
-
-class IndexHandler(
-    private val maskWrapper: IndexWrapper.Mask,
-    private val textWrapper: IndexWrapper.Text
-) {
-    fun canContinue() = maskWrapper.isUnitVisible() || !textWrapper.isLastIndex()
-
-    fun getWrapper() = maskWrapper.takeIf {
-        maskWrapper.isUnitStatic() || (maskWrapper.isUnitVisible() && textWrapper.isEmpty())
-    } ?: textWrapper
-
-    fun incCopy() = if (maskWrapper.isUnitStatic() || textWrapper.isLastIndex())
-        IndexHandler(maskWrapper.incCopy(), textWrapper)
-    else
-        IndexHandler(maskWrapper.incCopy(), textWrapper.incCopy())
-}
+import ru.gok.textwatcher.addons.store.MaskUnit
 
 abstract class IndexWrapper(protected val index: Int) {
 

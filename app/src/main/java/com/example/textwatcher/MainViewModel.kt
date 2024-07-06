@@ -1,10 +1,10 @@
 package com.example.textwatcher
 
 import androidx.lifecycle.ViewModel
-import ru.gok.textwatcher.MaskUnit
-import ru.gok.textwatcher.MaskVisualTransformation
-import ru.gok.textwatcher.store.MaskStore
-import ru.gok.textwatcher.text_filter.TextFilter
+import ru.gok.textwatcher.addons.filters.Limiter
+import ru.gok.textwatcher.addons.store.MaskUnit
+import ru.gok.textwatcher.visual_transformation.MaskVisualTransformation
+import ru.gok.textwatcher.addons.store.MaskStore
 
 class MainViewModel : ViewModel() {
 
@@ -32,6 +32,6 @@ class MainViewModel : ViewModel() {
                 MaskUnit.Empty(),
                 MaskUnit.Empty(),
             )
-        ), TextFilter.Base(10)
+        ), Limiter.Limited(10)
     )
 }

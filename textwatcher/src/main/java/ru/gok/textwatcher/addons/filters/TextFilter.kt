@@ -1,4 +1,4 @@
-package ru.gok.textwatcher.text_filter
+package ru.gok.textwatcher.addons.filters
 
 interface TextFilter {
 

@@ -1,8 +1,8 @@
-package ru.gok.textwatcher.store
+package ru.gok.textwatcher.addons.store
 
-import ru.gok.textwatcher.store.count_state.CountUnitMapper
+import ru.gok.textwatcher.addons.store.count_state.CountUnitMapper
 
-enum class StoreOffsetType {
+enum class OffsetType {
 
     TO_TRANSFORM {
         override fun mapper() = CountUnitMapper.ToTransform()

@@ -1,6 +1,6 @@
-package ru.gok.textwatcher.store.count_state
+package ru.gok.textwatcher.addons.store.count_state
 
-import ru.gok.textwatcher.MaskUnit
+import ru.gok.textwatcher.addons.store.MaskUnit
 
 interface CountUnitMapper {
 

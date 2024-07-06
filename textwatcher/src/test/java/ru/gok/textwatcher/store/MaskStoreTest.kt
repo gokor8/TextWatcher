@@ -2,7 +2,8 @@ package ru.gok.textwatcher.store
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import ru.gok.textwatcher.MaskUnit
+import ru.gok.textwatcher.addons.store.MaskUnit
+import ru.gok.textwatcher.addons.store.MaskStore
 
 class MaskStoreTest {
 

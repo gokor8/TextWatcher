@@ -2,8 +2,9 @@ package ru.gok.textwatcher.store
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import ru.gok.textwatcher.MaskUnit
-import ru.gok.textwatcher.store.count_state.CountUnitMapper
+import ru.gok.textwatcher.addons.store.MaskUnit
+import ru.gok.textwatcher.addons.store.MaskStore
+import ru.gok.textwatcher.addons.store.count_state.CountUnitMapper
 
 class OffsetOriginTest {
 
