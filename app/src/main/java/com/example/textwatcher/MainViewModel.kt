@@ -8,13 +8,8 @@ import com.gok.text_watcher.addons.store.MaskStore
 
 class MainViewModel : ViewModel() {
 
-    val maskVisualTransformation = MaskVisualTransformation(
+    val phoneVisualTransformation = MaskVisualTransformation(
         MaskStore.Default(
-//            arrayOf(
-//                MaskUnit.Replace('8'),
-//                MaskUnit.Static('-'),
-//                MaskUnit.Empty()
-//            )
             arrayOf(
                 MaskUnit.Static('+'),
                 MaskUnit.Static('7'),
@@ -33,5 +28,48 @@ class MainViewModel : ViewModel() {
                 MaskUnit.Empty(),
             )
         ), Limiter.Limited(10)
+    )
+
+    val cardVisualTransformation = MaskVisualTransformation(
+        MaskStore.Default(
+            arrayOf(
+                MaskUnit.Empty(),
+                MaskUnit.Empty(),
+                MaskUnit.Empty(),
+                MaskUnit.Empty(),
+                MaskUnit.Static('-'),
+                MaskUnit.Empty(),
+                MaskUnit.Empty(),
+                MaskUnit.Empty(),
+                MaskUnit.Empty(),
+                MaskUnit.Static('-'),
+                MaskUnit.Empty(),
+                MaskUnit.Empty(),
+                MaskUnit.Empty(),
+                MaskUnit.Empty(),
+                MaskUnit.Static('-'),
+                MaskUnit.Empty(),
+                MaskUnit.Empty(),
+                MaskUnit.Empty(),
+                MaskUnit.Empty()
+            )
+        ), Limiter.Limited(16)
+    )
+
+    val mixVisualTransformation = MaskVisualTransformation(
+        MaskStore.Default(
+            arrayOf(
+                MaskUnit.Static('+'),
+                MaskUnit.Replace('7'),
+                MaskUnit.Static('('),
+                MaskUnit.Empty(),
+                MaskUnit.Empty(),
+                MaskUnit.Empty(),
+                MaskUnit.Static(')'),
+                MaskUnit.Static('.'),
+                MaskUnit.Static('.'),
+                MaskUnit.Static('.'),
+            )
+        ), Limiter.Limited(3)
     )
 }

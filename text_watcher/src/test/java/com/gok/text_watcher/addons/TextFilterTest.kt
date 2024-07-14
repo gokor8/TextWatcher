@@ -16,4 +16,15 @@ class TextFilterTest {
 
         assertEquals(expected, actual)
     }
+
+    @Test
+    fun `filter unlimited symbols`() {
+        val textFilter = TextFilter.Unlimited()
+
+        val testString = "12345678901"
+        val expected = "12345678901"
+        val actual = textFilter.filter(testString)
+
+        assertEquals(expected, actual)
+    }
 }
