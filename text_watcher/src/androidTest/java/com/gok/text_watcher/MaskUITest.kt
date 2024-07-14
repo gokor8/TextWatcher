@@ -1,6 +1,5 @@
 package com.gok.text_watcher
 
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -74,6 +73,64 @@ class MaskUITest {
         composeTestRule.onNodeWithTag(tag).performTextInput("1234")
         composeTestRule.onNodeWithTag(tag).assert(hasText("-1-21234"))
     }
+
+    @Test
+    fun test_mix_with_limit() {
+        testRuleSettings.prepare(
+            MaskVisualTransformation(
+                MaskStore.Default(
+                    arrayOf(
+                        MaskUnit.Replace('7'),
+                        MaskUnit.Empty(),
+                        MaskUnit.Static('-'),
+                        MaskUnit.Empty()
+                    )
+                ),
+                Limiter.Limited(2)
+            )
+        )
+
+        composeTestRule.onNodeWithTag(tag).assert(hasText("7"))
+
+        composeTestRule.onNodeWithTag(tag).performTextInput("1")
+        composeTestRule.onNodeWithTag(tag).assert(hasText("1"))
+
+        composeTestRule.onNodeWithTag(tag).performTextInput("2")
+        composeTestRule.onNodeWithTag(tag).assert(hasText("12-"))
+
+        composeTestRule.onNodeWithTag(tag).performTextInput("3")
+        composeTestRule.onNodeWithTag(tag).assert(hasText("12-"))
+    }
+
+    @Test
+    fun test_mix_with_un_limit() {
+        testRuleSettings.prepare(
+            MaskVisualTransformation(
+                MaskStore.Default(
+                    arrayOf(
+                        MaskUnit.Replace('7'),
+                        MaskUnit.Empty(),
+                        MaskUnit.Static('-'),
+                        MaskUnit.Empty()
+                    )
+                ),
+                Limiter.Unlimited()
+            )
+        )
+        composeTestRule.onNodeWithTag(tag).assert(hasText("7"))
+
+        composeTestRule.onNodeWithTag(tag).performTextInput("1")
+        composeTestRule.onNodeWithTag(tag).assert(hasText("1"))
+
+        composeTestRule.onNodeWithTag(tag).performTextInput("2")
+        composeTestRule.onNodeWithTag(tag).assert(hasText("12-"))
+
+        composeTestRule.onNodeWithTag(tag).performTextInput("3")
+        composeTestRule.onNodeWithTag(tag).assert(hasText("12-3"))
+
+        composeTestRule.onNodeWithTag(tag).performTextInput("1234")
+        composeTestRule.onNodeWithTag(tag).assert(hasText("12-31234"))
+    }
 }
 
 private class TestRuleSettings(
@@ -87,7 +144,7 @@ private class TestRuleSettings(
                 mutableStateOf("")
             }
             MaskedTextField(text = text, mask = mask, modifier = Modifier.testTag(tag)) {
-                text += it
+                text = it
             }
         }
     }

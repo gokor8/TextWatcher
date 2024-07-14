@@ -6,7 +6,7 @@ abstract class Limiter(private val textFilter: TextFilter) : TextFilter {
 
     open fun subOffset(offset: Int): Int = offset
 
-    class Unlimited : Limiter(TextFilter.NoLimit())
+    class Unlimited : Limiter(TextFilter.Unlimited())
 
     class Limited(private val limit: Int) : Limiter(TextFilter.Base(limit)) {
         override fun subOffset(offset: Int) = offset.takeIf { it <= limit } ?: limit

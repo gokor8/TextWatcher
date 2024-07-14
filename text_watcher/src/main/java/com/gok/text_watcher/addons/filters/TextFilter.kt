@@ -12,7 +12,7 @@ interface TextFilter {
         } ?: text
     }
 
-    class NoLimit : TextFilter {
+    class Unlimited : TextFilter {
         override fun filter(text: String) = text
     }
 }
