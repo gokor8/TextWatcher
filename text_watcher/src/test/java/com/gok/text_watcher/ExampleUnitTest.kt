@@ -1,7 +1,6 @@
 package com.gok.text_watcher
 
 import org.junit.Test
-
 import org.junit.Assert.*
 
 /**
