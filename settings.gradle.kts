@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "TextWatcher"
 include(":app")
-include(":textwatcher")
+include(":text_watcher")
