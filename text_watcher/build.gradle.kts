@@ -1,6 +1,63 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("maven-publish")
+    id("signing")
+}
+
+group = "com.gok"
+version = "1.0.0"
+
+publishing {
+    publications {
+        create<MavenPublication>("release") {
+            from(components["release"])
+
+            groupId = "io.github"
+            artifactId = "textwatcher"
+            version = "1.0.0"
+
+            pom {
+                name.set("TextWatcher")
+                description.set("TextField mask library for compose")
+                url.set("https://github.com/gokor8/TextWatcher")
+
+                licenses {
+                    license {
+                        name.set("The Apache License, Version 2.0")
+                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                    }
+                }
+
+                developers {
+                    developer {
+                        id.set("gokor8")
+                        name.set("Gregory")
+                        email.set("fackinghol1689@gmail.com")
+                    }
+                }
+
+                scm {
+                    connection.set("scm:git:github.com/gokor8/TextWatcher.git")
+                    developerConnection.set("scm:git:ssh://github.com/gokor8/TextWatcher.git")
+                    url.set("https://github.com/gokor8/TextWatcher.git")
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            val releasesRepoUrl = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+            val snapshotsRepoUrl = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+            url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
+
+            credentials {
+                username = project.findProperty("ossrhUsername") as String?
+                password = project.findProperty("ossrhPassword") as String?
+            }
+        }
+    }
 }
 
 android {
@@ -9,7 +66,6 @@ android {
 
     defaultConfig {
         minSdk = 26
-        targetSdk = 34
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
