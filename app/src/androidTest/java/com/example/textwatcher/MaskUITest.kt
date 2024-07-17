@@ -1,4 +1,4 @@
-package com.gok.text_watcher
+package com.example.textwatcher
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -12,12 +12,30 @@ import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performTextInput
+import com.gok.text_watcher.MaskedTextField
 import com.gok.text_watcher.addons.filters.Limiter
 import com.gok.text_watcher.addons.store.MaskStore
 import com.gok.text_watcher.addons.store.MaskUnit
 import com.gok.text_watcher.visual_transformation.MaskVisualTransformation
 import org.junit.Rule
 import org.junit.Test
+
+private class TestRuleSettings(
+    private val tag: String,
+    private val rule: ComposeContentTestRule
+) {
+
+    fun prepare(mask: MaskVisualTransformation) {
+        rule.setContent {
+            var text by remember {
+                mutableStateOf("")
+            }
+            MaskedTextField(text = text, mask = mask, modifier = Modifier.testTag(tag)) {
+                text = it
+            }
+        }
+    }
+}
 
 class MaskUITest {
 
@@ -130,22 +148,5 @@ class MaskUITest {
 
         composeTestRule.onNodeWithTag(tag).performTextInput("1234")
         composeTestRule.onNodeWithTag(tag).assert(hasText("12-31234"))
-    }
-}
-
-private class TestRuleSettings(
-    private val tag: String,
-    private val rule: ComposeContentTestRule
-) {
-
-    fun prepare(mask: MaskVisualTransformation) {
-        rule.setContent {
-            var text by remember {
-                mutableStateOf("")
-            }
-            MaskedTextField(text = text, mask = mask, modifier = Modifier.testTag(tag)) {
-                text = it
-            }
-        }
     }
 }
