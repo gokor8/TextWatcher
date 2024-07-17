@@ -4,6 +4,43 @@ plugins {
     id("maven-publish")
 }
 
+publishing {
+    publications {
+        create<MavenPublication>("release") {
+            groupId = "com.github.gokor8"
+            artifactId = "textwatcher"
+            version = "1.0"
+
+            pom {
+                name.set("Text Watcher")
+                description.set("Mask library for compose")
+                url.set("https://github.com/gokor8/TextWatcher")
+
+                licenses {
+                    license {
+                        name.set("The Apache License, Version 2.0")
+                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                    }
+                }
+
+                developers {
+                    developer {
+                        id.set("gokor8")
+                        name.set("Gregory")
+                        email.set("fackinghol1689@gmail.com")
+                    }
+                }
+
+                scm {
+                    connection.set("scm:git:git://github.com/gokor8/TextWatcher.git")
+                    developerConnection.set("scm:git:ssh://git@github.com:gokor8/TextWatcher.git")
+                    url.set("https://github.com/gokor8/TextWatcher")
+                }
+            }
+        }
+    }
+}
+
 android {
     namespace = "com.gok.text_watcher"
     compileSdk = 34
@@ -19,7 +56,7 @@ android {
 
     buildTypes {
         buildTypes {
-            getByName("release") {
+            release {
                 isMinifyEnabled = false
                 proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             }
