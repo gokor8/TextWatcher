@@ -11,6 +11,10 @@ publishing {
             artifactId = "textwatcher"
             version = "1.0"
 
+            afterEvaluate {
+                from(components["release"])
+            }
+
             pom {
                 name.set("Text Watcher")
                 description.set("Mask library for compose")
